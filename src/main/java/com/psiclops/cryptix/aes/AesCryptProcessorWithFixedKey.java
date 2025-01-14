@@ -4,13 +4,15 @@ import com.psiclops.cryptix.CryptProcessorWithFixedKey;
 
 import lombok.RequiredArgsConstructor;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import javax.crypto.*;
+import javax.crypto.NoSuchPaddingException;
 
 @RequiredArgsConstructor
 public class AesCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey<byte[], byte[]> {

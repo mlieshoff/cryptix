@@ -1,11 +1,18 @@
 package com.psiclops.cryptix.aes;
 
-import static javax.crypto.Cipher.*;
+import static javax.crypto.Cipher.DECRYPT_MODE;
+import static javax.crypto.Cipher.ENCRYPT_MODE;
+import static javax.crypto.Cipher.getInstance;
 
 import com.psiclops.cryptix.AbstractCryptProcessor;
 import com.psiclops.cryptix.CryptProcessor;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -14,7 +21,12 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -99,7 +111,7 @@ public class AesCryptProcessor extends AbstractCryptProcessor
         byte[] iv = encrypted.readNBytes(IV_LENGTH_BYTE);
         byte[] salt = encrypted.readNBytes(SALT_LENGTH_BYTE);
         SecretKey aesKeyFromPassword = getAESKeyFromPassword(key, salt);
-        javax.crypto.Cipher cipher = getInstance(ENCRYPT_ALGO);
+        Cipher cipher = getInstance(ENCRYPT_ALGO);
         cipher.init(DECRYPT_MODE, aesKeyFromPassword, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
         CipherInputStream cipherInputStream = new CipherInputStream(encrypted, cipher);
         copy(cipherInputStream, decrypted);

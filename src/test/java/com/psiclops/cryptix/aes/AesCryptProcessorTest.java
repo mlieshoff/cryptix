@@ -1,6 +1,6 @@
 package com.psiclops.cryptix.aes;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
