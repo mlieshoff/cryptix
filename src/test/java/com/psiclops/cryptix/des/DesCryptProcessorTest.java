@@ -1,12 +1,13 @@
 package com.psiclops.cryptix.des;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @ExtendWith(MockitoExtension.class)
 class DesCryptProcessorTest {
@@ -17,8 +18,7 @@ class DesCryptProcessorTest {
     private static final byte[] KEY_BYTES = KEY.getBytes(UTF_8);
     private static final byte[] TEXT_BYTES = TEXT.getBytes(UTF_8);
 
-    @InjectMocks
-    private DesCryptProcessor unitUnderTest;
+    @InjectMocks private DesCryptProcessor unitUnderTest;
 
     @Test
     void encryptDecrypt() throws Exception {
@@ -29,5 +29,4 @@ class DesCryptProcessorTest {
 
         assertArrayEquals(TEXT_BYTES, actual);
     }
-
 }

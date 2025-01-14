@@ -1,9 +1,10 @@
 package com.psiclops.cryptix;
 
+import static com.psiclops.cryptix.AbstractCryptProcessor.copy;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -11,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
-import static com.psiclops.cryptix.AbstractCryptProcessor.copy;
+import javax.crypto.NoSuchPaddingException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,12 +21,19 @@ public class CryptChain implements CryptProcessorWithFixedKey<byte[], byte[]> {
     private final List<CryptProcessorWithFixedKey<byte[], byte[]>> encryptProcessors;
     private final List<CryptProcessorWithFixedKey<byte[], byte[]>> decryptProcessors;
 
-    public static CryptChain chain(List<CryptProcessorWithFixedKey<byte[], byte[]>> cryptProcessors) {
+    public static CryptChain chain(
+            List<CryptProcessorWithFixedKey<byte[], byte[]>> cryptProcessors) {
         return new CryptChain(cryptProcessors, cryptProcessors.reversed());
     }
 
     @Override
-    public byte[] encrypt(byte[] decrypted) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException {
+    public byte[] encrypt(byte[] decrypted)
+            throws InvalidAlgorithmParameterException,
+                    NoSuchPaddingException,
+                    IOException,
+                    NoSuchAlgorithmException,
+                    InvalidKeySpecException,
+                    InvalidKeyException {
         byte[] result = decrypted;
         long ms = -System.currentTimeMillis();
         for (CryptProcessorWithFixedKey<byte[], byte[]> encryptProcessor : encryptProcessors) {
@@ -37,7 +45,13 @@ public class CryptChain implements CryptProcessorWithFixedKey<byte[], byte[]> {
     }
 
     @Override
-    public byte[] decrypt(byte[] encrypted) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException {
+    public byte[] decrypt(byte[] encrypted)
+            throws InvalidAlgorithmParameterException,
+                    NoSuchPaddingException,
+                    IOException,
+                    NoSuchAlgorithmException,
+                    InvalidKeySpecException,
+                    InvalidKeyException {
         byte[] result = encrypted;
         long ms = -System.currentTimeMillis();
         for (CryptProcessorWithFixedKey<byte[], byte[]> decryptProcessor : decryptProcessors) {
@@ -49,7 +63,13 @@ public class CryptChain implements CryptProcessorWithFixedKey<byte[], byte[]> {
     }
 
     @Override
-    public void encrypt(InputStream decrypted, OutputStream encrypted) throws IOException, InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException {
+    public void encrypt(InputStream decrypted, OutputStream encrypted)
+            throws IOException,
+                    InvalidAlgorithmParameterException,
+                    InvalidKeyException,
+                    NoSuchAlgorithmException,
+                    InvalidKeySpecException,
+                    NoSuchPaddingException {
         InputStream interimInput = decrypted;
         if (encryptProcessors.size() == 1) {
             encryptProcessors.getFirst().encrypt(interimInput, encrypted);
@@ -65,7 +85,13 @@ public class CryptChain implements CryptProcessorWithFixedKey<byte[], byte[]> {
     }
 
     @Override
-    public void decrypt(InputStream encrypted, OutputStream decrypted) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
+    public void decrypt(InputStream encrypted, OutputStream decrypted)
+            throws IOException,
+                    NoSuchAlgorithmException,
+                    InvalidKeySpecException,
+                    NoSuchPaddingException,
+                    InvalidAlgorithmParameterException,
+                    InvalidKeyException {
         InputStream interimInput = encrypted;
         if (encryptProcessors.size() == 1) {
             encryptProcessors.getFirst().decrypt(interimInput, decrypted);
@@ -79,5 +105,4 @@ public class CryptChain implements CryptProcessorWithFixedKey<byte[], byte[]> {
         }
         copy(interimInput, decrypted);
     }
-
 }

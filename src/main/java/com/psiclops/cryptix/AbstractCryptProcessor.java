@@ -9,8 +9,7 @@ import java.io.OutputStream;
 @RequiredArgsConstructor
 public abstract class AbstractCryptProcessor {
 
-    public static void copy(InputStream inputStream, OutputStream outputStream)
-            throws IOException {
+    public static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
         byte[] bytes = new byte[4096];
         int size;
         while ((size = inputStream.read(bytes)) != -1) {
@@ -20,5 +19,4 @@ public abstract class AbstractCryptProcessor {
         outputStream.close();
         inputStream.close();
     }
-
 }

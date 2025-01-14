@@ -1,14 +1,15 @@
 package com.psiclops.cryptix.rsa;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.security.KeyPair;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @ExtendWith(MockitoExtension.class)
 class RsaCryptProcessorTest {
@@ -19,8 +20,7 @@ class RsaCryptProcessorTest {
     private static final byte[] KEY_BYTES = KEY.getBytes(UTF_8);
     private static final byte[] TEXT_BYTES = TEXT.getBytes(UTF_8);
 
-    @InjectMocks
-    private RsaCryptProcessor unitUnderTest;
+    @InjectMocks private RsaCryptProcessor unitUnderTest;
 
     @Test
     void encryptDecrypt() throws Exception {
@@ -32,5 +32,4 @@ class RsaCryptProcessorTest {
 
         assertArrayEquals(TEXT_BYTES, actual);
     }
-
 }

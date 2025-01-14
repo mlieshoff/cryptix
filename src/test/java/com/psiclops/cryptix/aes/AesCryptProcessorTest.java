@@ -1,12 +1,13 @@
 package com.psiclops.cryptix.aes;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class AesCryptProcessorTest {
@@ -17,8 +18,7 @@ class AesCryptProcessorTest {
     private static final byte[] KEY_BYTES = KEY.getBytes(UTF_8);
     private static final byte[] TEXT_BYTES = TEXT.getBytes(UTF_8);
 
-    @InjectMocks
-    private AesCryptProcessor unitUnderTest;
+    @InjectMocks private AesCryptProcessor unitUnderTest;
 
     @Test
     void encryptDecrypt() throws Exception {
@@ -29,5 +29,4 @@ class AesCryptProcessorTest {
 
         assertArrayEquals(TEXT_BYTES, actual);
     }
-
 }
