@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.*;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.*;
 
@@ -22,11 +21,9 @@ public class RsaCryptProcessor extends AbstractCryptProcessor
 
     @Override
     public byte[] encrypt(KeyPair keyPair, byte[] decrypted)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     InvalidKeyException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         encrypt(keyPair, new ByteArrayInputStream(decrypted), byteArrayOutputStream);
@@ -35,11 +32,9 @@ public class RsaCryptProcessor extends AbstractCryptProcessor
 
     @Override
     public byte[] decrypt(KeyPair keyPair, byte[] decrypted)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     InvalidKeyException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         decrypt(keyPair, new ByteArrayInputStream(decrypted), byteArrayOutputStream);
@@ -51,7 +46,6 @@ public class RsaCryptProcessor extends AbstractCryptProcessor
             throws IOException,
                     InvalidKeyException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     NoSuchPaddingException {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(ENCRYPT_MODE, keyPair.getPublic());
@@ -62,7 +56,6 @@ public class RsaCryptProcessor extends AbstractCryptProcessor
     public void decrypt(KeyPair keyPair, InputStream encrypted, OutputStream decrypted)
             throws IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     NoSuchPaddingException,
                     InvalidKeyException {
         Cipher cipher = Cipher.getInstance("RSA");

@@ -5,7 +5,6 @@ import com.psiclops.cryptix.CryptProcessorWithFixedKey;
 import lombok.RequiredArgsConstructor;
 
 import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -21,8 +20,7 @@ public class DesCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
 
     @Override
     public byte[] encrypt(byte[] bytes)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
                     InvalidKeySpecException,
@@ -33,7 +31,6 @@ public class DesCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
     @Override
     public void encrypt(InputStream decrypted, OutputStream encrypted)
             throws IOException,
-                    InvalidAlgorithmParameterException,
                     InvalidKeyException,
                     NoSuchAlgorithmException,
                     InvalidKeySpecException,
@@ -43,8 +40,7 @@ public class DesCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
 
     @Override
     public byte[] decrypt(byte[] bytes)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
                     InvalidKeySpecException,
@@ -58,7 +54,6 @@ public class DesCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
                     NoSuchAlgorithmException,
                     InvalidKeySpecException,
                     NoSuchPaddingException,
-                    InvalidAlgorithmParameterException,
                     InvalidKeyException {
         desCryptProcessor.decrypt(key, encrypted, decrypted);
     }

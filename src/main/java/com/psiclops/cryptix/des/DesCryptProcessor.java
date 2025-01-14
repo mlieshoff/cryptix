@@ -50,12 +50,22 @@ public class DesCryptProcessor extends AbstractCryptProcessor
                     NoSuchAlgorithmException,
                     InvalidKeySpecException,
                     NoSuchPaddingException {
+        cryptOrDecrypt(key, decrypted, encrypted, ENCRYPT_MODE);
+    }
+
+    private void cryptOrDecrypt(
+            byte[] key, InputStream decrypted, OutputStream encrypted, int encryptMode)
+            throws InvalidKeyException,
+                    NoSuchAlgorithmException,
+                    InvalidKeySpecException,
+                    NoSuchPaddingException,
+                    IOException {
         byte[] keyBytes = new String(key).getBytes(UTF_8);
         DESKeySpec dks = new DESKeySpec(keyBytes);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
         SecretKey desKey = skf.generateSecret(dks);
-        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES");
-        cipher.init(ENCRYPT_MODE, desKey);
+        Cipher cipher = Cipher.getInstance("DES");
+        cipher.init(encryptMode, desKey);
         copy(decrypted, new CipherOutputStream(encrypted, cipher));
     }
 
@@ -66,12 +76,6 @@ public class DesCryptProcessor extends AbstractCryptProcessor
                     InvalidKeySpecException,
                     NoSuchPaddingException,
                     InvalidKeyException {
-        byte[] keyBytes = new String(key).getBytes(UTF_8);
-        DESKeySpec dks = new DESKeySpec(keyBytes);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
-        SecretKey desKey = skf.generateSecret(dks);
-        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES");
-        cipher.init(DECRYPT_MODE, desKey);
-        copy(encrypted, new CipherOutputStream(decrypted, cipher));
+        cryptOrDecrypt(key, encrypted, decrypted, DECRYPT_MODE);
     }
 }

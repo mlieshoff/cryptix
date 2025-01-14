@@ -5,11 +5,9 @@ import com.psiclops.cryptix.CryptProcessorWithFixedKey;
 import lombok.RequiredArgsConstructor;
 
 import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.NoSuchPaddingException;
 
@@ -22,11 +20,9 @@ public class RsaCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
 
     @Override
     public byte[] encrypt(byte[] bytes)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     InvalidKeyException {
         return rsaCryptProcessor.encrypt(keyPair, bytes);
     }
@@ -34,21 +30,17 @@ public class RsaCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
     @Override
     public void encrypt(InputStream decrypted, OutputStream encrypted)
             throws IOException,
-                    InvalidAlgorithmParameterException,
                     InvalidKeyException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     NoSuchPaddingException {
         rsaCryptProcessor.encrypt(keyPair, decrypted, encrypted);
     }
 
     @Override
     public byte[] decrypt(byte[] bytes)
-            throws InvalidAlgorithmParameterException,
-                    NoSuchPaddingException,
+            throws NoSuchPaddingException,
                     IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     InvalidKeyException {
         return rsaCryptProcessor.decrypt(keyPair, bytes);
     }
@@ -57,9 +49,7 @@ public class RsaCryptProcessorWithFixedKey implements CryptProcessorWithFixedKey
     public void decrypt(InputStream encrypted, OutputStream decrypted)
             throws IOException,
                     NoSuchAlgorithmException,
-                    InvalidKeySpecException,
                     NoSuchPaddingException,
-                    InvalidAlgorithmParameterException,
                     InvalidKeyException {
         rsaCryptProcessor.decrypt(keyPair, encrypted, decrypted);
     }

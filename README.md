@@ -1,9 +1,26 @@
 [![](https://img.shields.io/badge/java-packagecloud.io-844fec.svg)](https://packagecloud.io/)
 
 # cryptix 1.0.0
-A Java Wrapper For Official Supercell Clash Royal Api
+
+A simple chain to concatenate crypt algorithms in order to encrypt and decrypt data. 
 
 ## Simplest Usage
+
+```java
+    KeyPair keyPair = KeyPairUtil.createKeyPair();
+    CryptChain cryptChain  =
+            CryptChain.chain(
+                    List.of(
+                            new DesCryptProcessorWithFixedKey("key"),
+                            new DesCryptProcessorWithFixedKey("secretKey"),
+                            new DesCryptProcessorWithFixedKey("mysecret"),
+                            new AesCryptProcessorWithFixedKey("verysecret"),
+                            new RsaCryptProcessorWithFixedKey(keyPair)));
+
+    byte[] encrypted = cryptChain.encrypt("hello world!");
+
+    byte[] decrypted = cryptChain.decrypt(encrypted);
+```
 
 ## How to bind the packagecloud repository
 
